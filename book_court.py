@@ -317,7 +317,15 @@ if __name__ == '__main__':
     time_now = datetime.datetime.now()
     while (time_now < ddl):
         print(time_now.strftime('%Y-%m-%d %H:%M:%S') + ",\twait for timing,\t" + ddl.strftime('%Y-%m-%d %H:%M:%S'))
-        time.sleep(1)
+        if (ddl - time_now).seconds >= 7200:
+            print('sleep one hour')
+            time.sleep(3600)
+        elif (ddl - time_now).seconds >= 120:
+            print('sleep one miniute')
+            time.sleep(60)
+        else:
+            time.sleep(1)
+
         time_now = datetime.datetime.now()
 
     print("start trying to book court")
