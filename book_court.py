@@ -308,7 +308,7 @@ class Book_Court():
 if __name__ == '__main__':
 
     name = 'qiyyyue'
-    password = 'Lee951012'
+    password = '******'
 
     date = datetime.datetime(2019, 5, 24)   #目标日期
     ddl = date + datetime.timedelta(days=-2, hours=18)    #开放时间
