@@ -12,7 +12,7 @@ import re
 class Book_Court():
 
 
-    def __init__(self, _name, _password, _date, _ggId = 1, _ffId = 1):
+    def __init__(self, _name, _password, _date, _ggId = 2, _ffId = 4):
         '''
         初始化
         :param _name: 用户名
@@ -310,13 +310,13 @@ if __name__ == '__main__':
     name = 'qiyyyue'
     password = 'Lee951012'
 
-    date = datetime.datetime(2019, 5, 23)   #目标日期
+    date = datetime.datetime(2019, 5, 24)   #目标日期
     ddl = date + datetime.timedelta(days=-2, hours=18)    #开放时间
 
     #计时器
     time_now = datetime.datetime.now()
     while (time_now < ddl):
-        print(time_now.strftime('%Y-%m-%d %H:%M:%S') + "    wait for timing")
+        print(time_now.strftime('%Y-%m-%d %H:%M:%S') + ",\twait for timing,\t" + ddl.strftime('%Y-%m-%d %H:%M:%S'))
         time.sleep(1)
         time_now = datetime.datetime.now()
 
