@@ -179,27 +179,28 @@ class Book_Court():
 
         _book_status = res.json()
 
-        # status = [[1 for _ in range(len(_book_status[0]))] for _ in range(len(_book_status))]
-        #
-        # for i in range(len(_book_status)):
-        #     for j in range(len(_book_status[0])):
-        #         item = _book_status[i][j]
-        #         status[i][j] = item['status']
+        status = [[1 for _ in range(len(_book_status[0]))] for _ in range(len(_book_status))]
 
-        #打印订阅信息
-        # for i in range(len(status)):
-        #     for j in range(len(status[0])):
-        #         print("{}\t".format(status[i][j]), end='')
-        #     print()
+        for i in range(len(_book_status)):
+            for j in range(len(_book_status[0])):
+                item = _book_status[i][j]
+                status[i][j] = item['status']
+
+        #打印场地信息
+        for i in range(len(status)):
+            for j in range(len(status[0])):
+                print("{}\t".format(status[i][j]), end='')
+            print()
 
         self.book_status = _book_status
 
-    def book_court(self, start_time = '00:00', max_time = 24.0, end_time = '21:00'):
+    def book_court(self, start_time = '9:00', max_time = 4, min_time = 2, end_time = '21:00'):
         '''
         订场地
         :param start_time: 最早开始时间   时-分
-        :param max_time: 最晚开始时间     时-分
-        :param end_time: 最长持续时间     小时数, 小树
+        :param max_time: 最长持续时间     小时数, float
+        :param min_time: 最短持续时间     小时数, float
+        :param end_time: 最晚开始时间     时-分
         :return:
         '''
 
@@ -221,6 +222,7 @@ class Book_Court():
         #j表示列数,i表示行数
         for j in range(len(self.book_status[0])):
             for i in range(start_i, len(self.book_status)):
+                # print(i, j)
                 if self.book_status[i][j]['status'] == 1:
                     continue
                 end_i = i
@@ -228,7 +230,7 @@ class Book_Court():
                     end_i += 1
                     if time.strptime(self.book_status[end_i][j]['endTime'], date_formate) >= time.strptime(end_time, date_formate):
                         break
-                    if datetime.datetime.strptime(self.book_status[i][j]['startTime'], date_formate) + datetime.timedelta(hours = max_time) >= datetime.datetime.strptime(self.book_status[end_i][j]['endTime'], date_formate):
+                    if datetime.datetime.strptime(self.book_status[i][j]['startTime'], date_formate) + datetime.timedelta(hours = max_time) <= datetime.datetime.strptime(self.book_status[end_i][j]['endTime'], date_formate):
                         break
                 if end_i - i > max_len_i:
                     max_s_i = i
@@ -236,9 +238,16 @@ class Book_Court():
                     max_len_i = end_i - i
                     max_j = j
 
+        print(max_s_i, max_e_i, max_len_i, max_j)
+        if (max_len_i + 1) < 2*min_time:
+            print('没有符合要求的场地, 最短时长不足')
+            time.sleep(60)
+            self.book_court(start_time=start_time, max_time=max_time, min_time=min_time, end_time=end_time)
+
         if max_len_i == 0:
             print('没有符合要求的场地')
-            return -1
+            time.sleep(60)
+            self.book_court(start_time=start_time, max_time=max_time, min_time=min_time, end_time=end_time)
 
 
         # construct headers and data
@@ -295,22 +304,22 @@ class Book_Court():
                 if try_count == 10:
                     print('没有符合要求的场地')
                     return -1
-                self.book_court(start_time, max_time, end_time)
+                self.book_court(start_time, max_time, min_time, end_time)
         except Exception as e:
             print(e)
             try_count += 1
             if try_count == 10:
                 print('没有符合要求的场地')
                 return -1
-            self.book_court(start_time, max_time, end_time)
+            self.book_court(start_time, max_time, min_time, end_time)
 
 
 if __name__ == '__main__':
 
     name = 'qiyyyue'
-    password = '******'
+    password = 'Lee951012'
 
-    date = datetime.datetime(2019, 5, 24)   #目标日期
+    date = datetime.datetime(2019, 5, 26)   #目标日期
     ddl = date + datetime.timedelta(days=-2, hours=18)    #开放时间
 
     #计时器
@@ -336,4 +345,5 @@ if __name__ == '__main__':
     bc.log_in()
     bc.get_userId()
     bc.get_court_info()
-    bc.book_court(start_time='10:00')
+
+    bc.book_court(start_time='9:00')
