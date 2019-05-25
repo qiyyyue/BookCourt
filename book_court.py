@@ -76,6 +76,9 @@ class Book_Court():
 
         res = requests.post(url, data = req_data, headers = req_headers)
 
+        return res.json()['status'] == 1 or res.json()['status'] == -1
+
+
     def get_userId(self):
         '''
         获取usrId
@@ -240,14 +243,16 @@ class Book_Court():
 
         print(max_s_i, max_e_i, max_len_i, max_j)
         if (max_len_i + 1) < 2*min_time:
-            print('没有符合要求的场地, 最短时长不足')
-            time.sleep(60)
-            self.book_court(start_time=start_time, max_time=max_time, min_time=min_time, end_time=end_time)
+            # print('没有符合要求的场地, 最短时长不足')
+            # time.sleep(60)
+            # self.book_court(start_time=start_time, max_time=max_time, min_time=min_time, end_time=end_time)
+            return {'code': 1}
 
         if max_len_i == 0:
-            print('没有符合要求的场地')
-            time.sleep(60)
-            self.book_court(start_time=start_time, max_time=max_time, min_time=min_time, end_time=end_time)
+            # print('没有符合要求的场地')
+            # time.sleep(60)
+            # self.book_court(start_time=start_time, max_time=max_time, min_time=min_time, end_time=end_time)
+            return {'code': 2}
 
 
         # construct headers and data
@@ -298,52 +303,45 @@ class Book_Court():
             print(response.text)
             if response.status_code == 200 and response.text != -1 and response.text != '-1' and response.json()['status'] == 0:
                 print("book succ!")
-                print("startTime:{}\tendTime{}\t{}号场".format(beginTime, endTime, max_j+1))
+                print("startTime:{}\tendTime:{}\t{}号场".format(beginTime, endTime, max_j+1))
+                return {'code': 0, 'msg': {'startTime': beginTime, 'endTime': endTime, 'courtNum': max_j+1}}
             else:
-                try_count += 1
-                if try_count == 10:
-                    print('没有符合要求的场地')
-                    return -1
-                self.book_court(start_time, max_time, min_time, end_time)
+                return {'code': 3}
         except Exception as e:
             print(e)
-            try_count += 1
-            if try_count == 10:
-                print('没有符合要求的场地')
-                return -1
-            self.book_court(start_time, max_time, min_time, end_time)
+            return {'code': 3}
 
 
-if __name__ == '__main__':
-
-    name = 'qiyyyue'
-    password = 'Lee951012'
-
-    date = datetime.datetime(2019, 5, 26)   #目标日期
-    ddl = date + datetime.timedelta(days=-2, hours=18)    #开放时间
-
-    #计时器
-    time_now = datetime.datetime.now()
-    while (time_now < ddl):
-        print(time_now.strftime('%Y-%m-%d %H:%M:%S') + ",\twait for timing,\t" + ddl.strftime('%Y-%m-%d %H:%M:%S'))
-        if (ddl - time_now).seconds >= 7200:
-            print('sleep one hour')
-            time.sleep(3600)
-        elif (ddl - time_now).seconds >= 120:
-            print('sleep one miniute')
-            time.sleep(60)
-        else:
-            time.sleep(1)
-
-        time_now = datetime.datetime.now()
-
-    print("start trying to book court")
-
-    #
-    bc = Book_Court(name, password, date)
-    bc.get_cookie()
-    bc.log_in()
-    bc.get_userId()
-    bc.get_court_info()
-
-    bc.book_court(start_time='9:00')
+# if __name__ == '__main__':
+#
+#     name = 'qiyyyue'
+#     password = 'Lee951012'
+#
+#     date = datetime.datetime(2019, 5, 26)   #目标日期
+#     ddl = date + datetime.timedelta(days=-2, hours=18)    #开放时间
+#
+#     #计时器
+#     time_now = datetime.datetime.now()
+#     while (time_now < ddl):
+#         print(time_now.strftime('%Y-%m-%d %H:%M:%S') + ",\twait for timing,\t" + ddl.strftime('%Y-%m-%d %H:%M:%S'))
+#         if (ddl - time_now).seconds >= 7200:
+#             print('sleep one hour')
+#             time.sleep(3600)
+#         elif (ddl - time_now).seconds >= 120:
+#             print('sleep one miniute')
+#             time.sleep(60)
+#         else:
+#             time.sleep(1)
+#
+#         time_now = datetime.datetime.now()
+#
+#     print("start trying to book court")
+#
+#     #
+#     bc = Book_Court(name, password, date)
+#     bc.get_cookie()
+#     bc.log_in()
+#     bc.get_userId()
+#     bc.get_court_info()
+#
+#     bc.book_court(start_time='9:00')
