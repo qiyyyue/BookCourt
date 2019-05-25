@@ -2,7 +2,7 @@
 
 ##使用
 
-> pip install -f requirements.txt
+> pip install -r requirements.txt
 
 > python UI.py
 
