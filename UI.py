@@ -80,7 +80,7 @@ class MyFrame(wx.Frame):    #创建自定义Frame
             self.time_list = [str(x // 2) + (':00' if x % 2 == 0 else ':30') for x in range(30, 43)]
         else:
             self.time_list = [str(x // 2) + (':00' if x % 2 == 0 else ':30') for x in range(18, 43)]
-        self.last_list = [str(x / 2) for x in range(2, len(self.time_list))]
+        self.last_list = [str(x / 2) + ' 小时' for x in range(2, len(self.time_list))]
 
     def addUserBox(self):
         self.userLabel = wx.StaticText(self.panel, -1, '请输入用户名:', pos=(20, 275))
@@ -199,55 +199,6 @@ class MyFrame(wx.Frame):    #创建自定义Frame
             return
 
         self.processTimer()
-        # Timer
-        # self.time_now = datetime.datetime.now()
-        # if self.time_now < self.ddl:
-        #     print('begin timer')
-        #     self.timer.Start(2000)
-        # while (time_now < ddl):
-        #     print(str(time_now.strftime('%Y-%m-%d %H:%M:%S') + ",\twait for timing,\t" + ddl.strftime('%Y-%m-%d %H:%M:%S') + '\n'))
-        #     self.area_text.AppendText(str('sleep one hour\n'))
-        #     self.timer.Start(2 * 1000)
-        #     self.area_text.AppendText(str(time_now.strftime('%Y-%m-%d %H:%M:%S') + ",\twait for timing,\t" + ddl.strftime('%Y-%m-%d %H:%M:%S') + '\n'))
-        #     if (ddl - time_now).seconds >= 7200:
-        #         print('!!!!!!')
-        #         self.area_text.AppendText(str('sleep one hour\n'))
-        #         self.timer.Start(2*1000)
-        #     elif (ddl - time_now).seconds >= 120:
-        #         self.area_text.AppendText(str('sleep one miniute\n'))
-        #         self.timer.Start(1*1000)
-        #     else:
-        #         self.timer.Start(1*1000)
-        #
-        #     time_now = datetime.datetime.now()
-
-        # 计时器
-        # time_now = datetime.datetime.now()
-        # while (time_now < ddl):
-        #     self.area_text.AppendText(str(time_now.strftime('%Y-%m-%d %H:%M:%S') + ",\twait for timing,\t" + ddl.strftime('%Y-%m-%d %H:%M:%S') + '\n'))
-        #     if (ddl - time_now).seconds >= 7200:
-        #         self.area_text.AppendText(str('sleep one hour\n'))
-        #         time.sleep(3600)
-        #     elif (ddl - time_now).seconds >= 120:
-        #         self.area_text.AppendText(str('sleep one miniute\n'))
-        #         time.sleep(60)
-        #     else:
-        #         time.sleep(1)
-        #
-        #     time_now = datetime.datetime.now()
-        #
-        # self.area_text.AppendText(str("start trying to book court\n"))
-        #
-        # #
-        # bc = Book_Court(name, password, date)
-        # bc.get_cookie()
-        # bc.log_in()
-        # bc.get_userId()
-        # bc.get_court_info()
-        #
-        # print(date, self.beginTime, self.endTime, self.minLast, self.maxLast)
-
-        # bc.book_court(start_time=str(self.beginTime), end_time=str(self.endTime), min_time=float(self.minLast), max_time=float(self.maxLast))
 
 
     def OnActionChangeDate(self, event):
@@ -262,7 +213,7 @@ class MyFrame(wx.Frame):    #创建自定义Frame
             self.time_list = [str(x // 2) + (':00' if x % 2 == 0 else ':30') for x in range(30, 43)]
         else:
             self.time_list = [str(x // 2) + (':00' if x % 2 == 0 else ':30') for x in range(18, 43)]
-        self.last_list = [str(x / 2) for x in range(2, len(self.time_list))]
+        self.last_list = [str(x / 2) + ' 小时' for x in range(2, len(self.time_list))]
 
         self.init_choice_box()
 
