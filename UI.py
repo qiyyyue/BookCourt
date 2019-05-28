@@ -6,18 +6,21 @@ from book_court import Book_Court
 
 class MyFrame(wx.Frame):    #创建自定义Frame
     def __init__(self,parent):
-        wx.Frame.__init__(self,parent,id=-1,title="Hello World",size=(380,800)) #设置窗体
+        wx.Frame.__init__(self,parent,id=-1,title="预定羽毛球场",size=(380,800)) #设置窗体
 
         self.init_component()
 
         self.Center()   #将窗口放在桌面环境的中间
 
     def init_component(self):
+        self.font = wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False)
+
         self.panel = wx.Panel(self)
         self.sizer = wx.GridBagSizer(5, 5)
         self.panel.SetSizer(self.sizer)
 
         self.datelabel = wx.StaticText(self.panel, -1, '请选择预定场地的日期:', pos=(20, 25))
+        self.datelabel.SetFont(self.font)
         self.datepick = adv.DatePickerCtrl(self.panel, id=-1, size=(160, 40), pos=(200, 20),
                                            style=wx.adv.DP_DROPDOWN | wx.adv.DP_SHOWCENTURY)
         self.datepick.Bind(adv.EVT_DATE_CHANGED, self.OnActionChangeDate)
@@ -27,12 +30,15 @@ class MyFrame(wx.Frame):    #创建自定义Frame
         self.addUserBox()
 
         self.beginBook = wx.Button(self.panel, label='开始预定', pos=(60, 375), size=(100, 40))
+        self.beginBook.SetFont(self.font)
         self.beginBook.Bind(wx.EVT_BUTTON, self.OnActionBeginBook)
 
         self.stopBook = wx.Button(self.panel, label='停止预定', pos=(220, 375), size=(100, 40))
+        self.stopBook.SetFont(self.font)
         self.stopBook.Bind(wx.EVT_BUTTON, self.OnActionStopBook)
 
         self.textLabel = wx.StaticText(self.panel, -1, '输出信息:', pos=(20, 430))
+        self.textLabel.SetFont(self.font)
 
         self.addTimer()
 
@@ -41,6 +47,7 @@ class MyFrame(wx.Frame):    #创建自定义Frame
     def init_choice_box(self):
         # 最早开始时间
         self.beginTimeLabel = wx.StaticText(self.panel, -1, '可接受的最早开始时间:', pos=(20, 75))
+        self.beginTimeLabel.SetFont(self.font)
         self.beginTimeChoice = wx.Choice(self.panel, -1, choices=self.time_list, pos=(200, 70), size=(160, 40))
         self.Bind(wx.EVT_CHOICE, self.OnActionChangeBeginTime, self.beginTimeChoice)
         self.beginTimeChoice.SetSelection(0)
@@ -48,6 +55,7 @@ class MyFrame(wx.Frame):    #创建自定义Frame
 
         # 最晚结束时间
         self.endTimeLabel = wx.StaticText(self.panel, -1, '可接受的最晚结束时间:', pos=(20, 125))
+        self.endTimeLabel.SetFont(self.font)
         self.endTimeChoice = wx.Choice(self.panel, -1, choices=self.time_list, pos=(200, 120), size=(160, 40))
         self.Bind(wx.EVT_CHOICE, self.OnActionChangeEndTime, self.endTimeChoice)
         self.endTimeChoice.SetSelection(len(self.time_list) - 1)
@@ -55,6 +63,7 @@ class MyFrame(wx.Frame):    #创建自定义Frame
 
         # 最短持续时间
         self.minLastTimeLabel = wx.StaticText(self.panel, -1, '可接受的最短持续时间:', pos=(20, 175))
+        self.minLastTimeLabel.SetFont(self.font)
         self.minLastTimeChoice = wx.Choice(self.panel, -1, choices=self.last_list, pos=(200, 170), size=(160, 40))
         self.Bind(wx.EVT_CHOICE, self.OnActionChangeMinLast, self.minLastTimeChoice)
         self.minLastTimeChoice.SetSelection(0)
@@ -62,6 +71,7 @@ class MyFrame(wx.Frame):    #创建自定义Frame
 
         # 最长持续时间
         self.maxLastTimeLabel = wx.StaticText(self.panel, -1, '可接受的最长持续时间:', pos=(20, 225))
+        self.maxLastTimeLabel.SetFont(self.font)
         self.maxLastTimeChoice = wx.Choice(self.panel, -1, choices=self.last_list, pos=(200, 220), size=(160, 40))
         self.Bind(wx.EVT_CHOICE, self.OnActionChangeMaxLast, self.maxLastTimeChoice)
         self.maxLastTimeChoice.SetSelection(4)
@@ -84,9 +94,11 @@ class MyFrame(wx.Frame):    #创建自定义Frame
 
     def addUserBox(self):
         self.userLabel = wx.StaticText(self.panel, -1, '请输入用户名:', pos=(20, 275))
+        self.userLabel.SetFont(self.font)
         self.userText = wx.TextCtrl(self.panel, -1, u'username', pos=(200, 270), size=(160, 40))
 
         self.pwdLabel = wx.StaticText(self.panel, -1, '请输入密码:', pos=(20, 325))
+        self.pwdLabel.SetFont(self.font)
         # self.showPwd = wx.Button(self.panel, label='显示密码', pos=(140, 327), size=(60, 25))
         # # self.showPwd.SetFont(wx.Font(8, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False))
         # # self.showPwd.Bind(wx.EVT_BUTTON, self.OnActionShowPwd)
