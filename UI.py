@@ -58,14 +58,14 @@ class MyFrame(wx.Frame):    #创建自定义Frame
         self.minLastTimeChoice = wx.Choice(self.panel, -1, choices=self.last_list, pos=(200, 170), size=(160, 40))
         self.Bind(wx.EVT_CHOICE, self.OnActionChangeMinLast, self.minLastTimeChoice)
         self.minLastTimeChoice.SetSelection(0)
-        self.minLast = self.last_list[0]
+        self.minLast = self.last_list[0].split()[0]
 
         # 最长持续时间
         self.maxLastTimeLabel = wx.StaticText(self.panel, -1, '可接受的最长持续时间:', pos=(20, 225))
         self.maxLastTimeChoice = wx.Choice(self.panel, -1, choices=self.last_list, pos=(200, 220), size=(160, 40))
         self.Bind(wx.EVT_CHOICE, self.OnActionChangeMaxLast, self.maxLastTimeChoice)
         self.maxLastTimeChoice.SetSelection(4)
-        self.maxLast = self.last_list[4]
+        self.maxLast = self.last_list[4].split()[0]
 
     def init_time(self):
 
@@ -220,22 +220,22 @@ class MyFrame(wx.Frame):    #创建自定义Frame
     def OnActionChangeBeginTime(self, event):
         index = event.GetEventObject().GetSelection()
         self.beginTime = self.time_list[index]
-        print(self.beginTime)
+        # print(self.beginTime)
 
     def OnActionChangeEndTime(self, event):
         index = event.GetEventObject().GetSelection()
         self.endTime = self.time_list[index]
-        print(self.endTime)
+        # print(self.endTime)
 
     def OnActionChangeMinLast(self, event):
         index = event.GetEventObject().GetSelection()
-        self.minLast = self.last_list[index]
-        print(self.minLast)
+        self.minLast = self.last_list[index].split()[0]
+        # print(self.minLast)
 
     def OnActionChangeMaxLast(self, event):
         index = event.GetEventObject().GetSelection()
-        self.maxLast = self.last_list[index]
-        print(self.maxLast)
+        self.maxLast = self.last_list[index].split()[0]
+        # print(self.maxLast)
 
 if __name__ == '__main__':
     app = wx.App()
