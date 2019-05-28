@@ -145,7 +145,7 @@ class MyFrame(wx.Frame):    #创建自定义Frame
         bc.get_userId()
         bc.get_court_info()
 
-        print(date, self.beginTime, self.endTime, self.minLast, self.maxLast)
+        # print(date, self.beginTime, self.endTime, self.minLast, self.maxLast)
 
         res = bc.book_court(start_time=str(self.beginTime), end_time=str(self.endTime), min_time=float(self.minLast), max_time=float(self.maxLast))
         if res['code'] == 0:

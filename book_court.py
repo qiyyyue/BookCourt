@@ -124,7 +124,7 @@ class Book_Court():
 
         res = requests.post(url, data=req_data, headers=req_headers)
 
-        print(res.text)
+        # print(res.text)
 
     def get_gym_items(self):
         '''
@@ -149,7 +149,7 @@ class Book_Court():
 
         res = requests.post(url, data=req_data, headers=req_headers)
 
-        print(res.text)
+        # print(res.text)
 
     def get_court_info(self):
         '''
@@ -241,7 +241,7 @@ class Book_Court():
                     max_len_i = end_i - i
                     max_j = j
 
-        print(max_s_i, max_e_i, max_len_i, max_j)
+        # print(max_s_i, max_e_i, max_len_i, max_j)
         if (max_len_i + 1) < 2*min_time:
             # print('没有符合要求的场地, 最短时长不足')
             # time.sleep(60)
@@ -300,7 +300,7 @@ class Book_Court():
         try_count = 0
         try:
             response = requests.post(url, data=req_data, headers=headers)
-            print(response.text)
+            # print(response.text)
             if response.status_code == 200 and response.text != -1 and response.text != '-1' and response.json()['status'] == 0:
                 print("book succ!")
                 print("startTime:{}\tendTime:{}\t{}号场".format(beginTime, endTime, max_j+1))
