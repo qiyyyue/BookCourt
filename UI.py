@@ -126,6 +126,7 @@ class MyFrame(wx.Frame):    #创建自定义Frame
         if self.ddl <= self.time_now:
             self.area_text.AppendText(str(u'开始尝试预定场地!!!!\n'))
             self.timer.Stop()
+            self.try_times = 5
             self.bookCourt()
             return
         if (self.ddl - self.time_now).seconds >= 3720:
@@ -176,9 +177,13 @@ class MyFrame(wx.Frame):    #创建自定义Frame
             msg.ShowModal()
             msg.Destroy()
         else:
-            msg = wx.MessageDialog(None, '预定场地失败,请稍后再试!', style=wx.OK | wx.ICON_INFORMATION)
-            msg.ShowModal()
-            msg.Destroy()
+            if self.try_times > 0:
+                self.try_times -= 1
+                self.bookCourt()
+            else:
+                msg = wx.MessageDialog(None, '预定场地失败,请稍后再试!', style=wx.OK | wx.ICON_INFORMATION)
+                msg.ShowModal()
+                msg.Destroy()
 
 
     def OnActionShowPwd(self, event):

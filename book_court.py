@@ -190,10 +190,10 @@ class Book_Court():
                 status[i][j] = item['status']
 
         #打印场地信息
-        for i in range(len(status)):
-            for j in range(len(status[0])):
-                print("{}\t".format(status[i][j]), end='')
-            print()
+        # for i in range(len(status)):
+        #     for j in range(len(status[0])):
+        #         print("{}\t".format(status[i][j]), end='')
+        #     print()
 
         self.book_status = _book_status
 
